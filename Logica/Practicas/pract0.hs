@@ -114,5 +114,10 @@ aux2::[String] ->String
 aux2 [] = ""
 aux2 (x:xs) = devuelveCarcater x ++ aux2 xs
 
+diferencia :: (Int,Int) -> Int
+diferencia (n,m) = (m-1) -n
+
+
+
 --juego::(Int,Int)->(Int,Int)
 --juego = error "Te toca"
