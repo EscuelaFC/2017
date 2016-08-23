@@ -6,6 +6,7 @@ Lógica computacional 2017-1
          Diego Murillo
 -}
 import Data.List
+import Data.Char
 
 data Nat = Cero | S Nat deriving Show
 
@@ -78,17 +79,40 @@ unaVez ls = [x |x<-ls , cuantas x ls == 1]
 
 
 compress1::String->String
-compress1 xs =  [head xs]++aux1 0 xs
+compress1 xs = aux1 0 xs
+
+compress2::String->String
+compress2 str = aux2 (words str)
 
 aux1::Int -> String ->String
 aux1 _ " " = ""
 aux1 n str 
-            | (n >= (length str)) = "" --para cuando nuestra n supere el largo de la cadena
+            | (n >= (length str)) = ""
+            |  n == 0 =[str !! 0] ++ aux1 (n+1) str
             | ([str !! n] == " ") =  [str !! (n+1)] ++ aux1 (n+1) str
             | otherwise = aux1 (n+1) str
 
---compress2::String->String
---compress2 = error "Te toca"
+
+dameNum:: String ->String
+dameNum (x:xs) = if (isDigit x) then
+                      [x]++dameNum xs
+                  else []
+
+tamanioDigitos:: String -> Int
+tamanioDigitos ""= 0
+tamanioDigitos (x:xs)
+             | isDigit x = 1 + tamanioDigitos xs
+             | otherwise = 0
+
+devuelveCarcater::String ->String
+devuelveCarcater ""  = []
+devuelveCarcater str
+                    | ((read (dameNum str)::Int)+1) > (length str - tamanioDigitos str) = " "
+                    | otherwise = [str !! ((read (dameNum str)::Int)+1)]
+
+aux2::[String] ->String
+aux2 [] = ""
+aux2 (x:xs) = devuelveCarcater x ++ aux2 xs
 
 --juego::(Int,Int)->(Int,Int)
 --juego = error "Te toca"
