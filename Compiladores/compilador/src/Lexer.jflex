@@ -29,24 +29,29 @@ FinDeLinea = \r|\n|\r\n
 Espacio = {FinDeLinea}|[ \t\f]
 Identificador = [:jletter:][:jletterdigit:]*
 Numero = 0 | [1-9][0-9]*
-
+Simbolos =  \* | \+ | < | > | <= | >= | == | \/ | =
+Comentarios =({Espacio})*(({Simbolos})*(({Espacio})*(([A-Za-z1-9]{Espacio}*))*)*({Simbolos}))
 %%
 
 <YYINITIAL> {
-   {Espacio}                 {}
-   "programa"	{return new Symbol(sym.PROGRAMA, yyline, yycolumn);}
-   "mientras" {return new Symbol(sym.MIENTRAS, yyline, yycolumn);}
-   "{"			{return new Symbol(sym.LLAVE_IZQ, yyline, yycolumn);}
-   "}"			{return new Symbol(sym.LLAVE_DER, yyline, yycolumn);}
-    "escribe"	{return new Symbol(sym.OP_ESCRITURA, yyline, yycolumn);}
-    "para" {return new Symbol(sym.PARA, yyline, yycolumn);}
-    "desde" {return new Symbol(sym.DESDE, yyline, yycolumn);}
-    "hasta" {return new Symbol(sym.HASTA, yyline, yycolumn);}
-    "si" {return new Symbol(sym.SI, yyline, yycolumn);}
-    "si no" {return new Symbol(sym.SI_NO, yyline, yycolumn);}
-    "entonces" {return new Symbol(sym.ENTONCES, yyline, yycolumn);}
-   ";"			{return new Symbol(sym.MARCADOR_FIN_SENTENCIA, yyline, yycolumn);}
-   \"						{cadena.setLength(0);yybegin(CADENA);}
+  {Espacio}                 {}  
+  {Comentarios}             {}
+  {Numero}                  {return new Symbol(sym.NUMERO, yyline, yycolumn);}
+  {Simbolos}                {return new Symbol(sym.SIMBOLO, yyline, yycolumn);}
+  "programa"                {return new Symbol(sym.PROGRAMA, yyline, yycolumn);}
+  "mientras"                {return new Symbol(sym.MIENTRAS, yyline, yycolumn);}
+  "{"			                  {return new Symbol(sym.LLAVE_IZQ, yyline, yycolumn);}
+  "}"		                    {return new Symbol(sym.LLAVE_DER, yyline, yycolumn);}
+  "escribe"	                {return new Symbol(sym.OP_ESCRITURA, yyline, yycolumn);}
+  "para"                    {return new Symbol(sym.PARA, yyline, yycolumn);}
+  "desde"                   {return new Symbol(sym.DESDE, yyline, yycolumn);}
+  "hasta"                   {return new Symbol(sym.HASTA, yyline, yycolumn);}
+  "si"                      {return new Symbol(sym.SI, yyline, yycolumn);}
+  "si no"                   {return new Symbol(sym.SI_NO, yyline, yycolumn);}
+  "entonces"                {return new Symbol(sym.ENTONCES, yyline, yycolumn);}
+  ";"			                  {return new Symbol(sym.MARCADOR_FIN_SENTENCIA, yyline, yycolumn);}
+  {Identificador}           {return new Symbol(sym.ID, yyline, yycolumn);}  
+  \"				                {cadena.setLength(0);yybegin(CADENA);}  
 }
 
 <CADENA> {

@@ -20,7 +20,7 @@ programa{
 	si n>2 {
 		entero fibo1=1;
 		entero fibo2=1;
-		entero fibonacci;
+		entero fibonacci;	
 		entero i=0;
 		para i desde 3 hasta N{
 			fibonacci = fibo1 + fibo2;
