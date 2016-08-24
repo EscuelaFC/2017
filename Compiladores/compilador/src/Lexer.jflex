@@ -30,7 +30,8 @@ Espacio = {FinDeLinea}|[ \t\f]
 Identificador = [:jletter:][:jletterdigit:]*
 Numero = 0 | [1-9][0-9]*
 Simbolos =  \* | \+ | < | > | <= | >= | == | \/ | =
-Comentarios =({Espacio})*(({Simbolos})*(({Espacio})*(([A-Za-z1-9]{Espacio}*))*)*({Simbolos}))
+//Comentarios =({Simbolos})(({Simbolos})*({Espacio})*(([A-Za-z1-9]({Espacio})*))*)*({Simbolos})
+Comentarios = ({Espacio})*({Simbolos})*(({Espacio})([A-Za-z1-9])*)*({Espacio})
 %%
 
 <YYINITIAL> {
