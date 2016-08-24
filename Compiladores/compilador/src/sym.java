@@ -23,7 +23,7 @@ public interface sym {
   public static final int SI_NO = 14;
   public static final int ID = 15;
   public static final int NUMERO = 16;
-  public static final int SIMBOLO = 17;
+  public static final int SIMBOLO = 17;  
   public static final String[] terminalNames = new String[] {
   "EOF",
   "error",
@@ -42,7 +42,7 @@ public interface sym {
   "SI NO",
   "IDENTIFICADOR",
   "NUMERO",
-  "SIMBOLO"
+  "SIMBOLO"  
   };
 }
 
