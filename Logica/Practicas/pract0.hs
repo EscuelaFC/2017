@@ -1,3 +1,5 @@
+--Abrego Alvarez Jonathan
+--308043305
 {-
 Lógica computacional 2017-1
          Noé Salomón Hernández Sánchez
@@ -9,6 +11,9 @@ import Data.List
 import Data.Char
 
 data Nat = Cero | S Nat deriving Show
+
+miCuenta :: Int
+miCuenta = 308043305
 
 suma:: Nat -> Nat -> Nat
 suma Cero n = n
