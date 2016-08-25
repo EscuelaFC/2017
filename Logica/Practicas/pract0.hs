@@ -84,6 +84,9 @@ compress1 xs = aux1 0 xs
 compress2::String->String
 compress2 str = aux2 (words str)
 
+juego::(Int,Int)->(Int,Int)
+juego (n,m) = (length (fin(eliminaDuplicados(generaTuplas n m))),mod (multiplica 1 (fin (eliminaDuplicados ( generaTuplas n m)))) ((power 10 9)+ 7))
+
 aux1::Int -> String ->String
 aux1 _ " " = ""
 aux1 n str 
@@ -114,10 +117,51 @@ aux2::[String] ->String
 aux2 [] = ""
 aux2 (x:xs) = devuelveCarcater x ++ aux2 xs
 
-diferencia :: (Int,Int) -> Int
-diferencia (n,m) = (m-1) -n
+
+cantidadDivisores:: Int->Int->Int->Int
+cantidadDivisores n k d| k < 1 = error"Debe ser mayor que 1"
+            | (((mod k n)==0) && (n <= k)) = cantidadDivisores (n+1) k (d+1)
+            | (n<k) = cantidadDivisores (n+1) k d
+            | otherwise = d
+
+esPrimo ::Int -> Bool
+esPrimo n = (cantidadDivisores 1 n 0) == 2
+
+devuelveListaPrimos:: Int ->[Int]
+devuelveListaPrimos m = [x | x <- [1..m], esPrimo x ]
+
+generaTuplas::Int -> Int -> [(Int,Int)]
+generaTuplas m n = [(x,y) | x<-lst, y<-lst, x /= y ,  (x+y)<= n &&  (x+y) >= m]
+                        where lst = (devuelveListaPrimos n)
+
+esta:: (Int,Int)->[(Int,Int)] ->Bool
+esta n [] = False
+esta n (x:xs) = if (fst n == snd x) &&  (fst x == snd n) then
+                    True
+                else (esta n xs)
+
+eliminaDuplicados :: [(Int,Int)] -> [(Int,Int)]
+eliminaDuplicados [] = []
+eliminaDuplicados (x:xs)= if (esta x xs) then 
+                              eliminaDuplicados xs
+                          else [x]++eliminaDuplicados xs                
 
 
+sumaIgual:: (Int,Int)->[(Int,Int)] -> Bool
+sumaIgual n [] = False
+sumaIgual n (x:xs) = if (fst n + snd n) == (fst x + snd x) then
+                        if (fst n * snd n) < (fst x * snd x) then 
+                           False
+                        else True
+                      else (sumaIgual n xs)                
 
---juego::(Int,Int)->(Int,Int)
---juego = error "Te toca"
+
+fin ::[(Int,Int)] -> [(Int,Int)]
+fin [] = []
+fin (x:xs) | (sumaIgual x xs) = fin xs
+           |  otherwise = [x]++fin xs
+
+multiplica::Int->[(Int,Int)]-> Int
+multiplica n [] = n
+multiplica n (x:xs) = n *(fst x*snd x)* (multiplica n xs)
+
