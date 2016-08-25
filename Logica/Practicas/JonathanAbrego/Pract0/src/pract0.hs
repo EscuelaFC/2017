@@ -92,6 +92,13 @@ compress2 str = aux2 (words str)
 juego::(Int,Int)->(Int,Int)
 juego (n,m) = (length (fin(eliminaDuplicados(generaTuplas n m))),mod (multiplica 1 (fin (eliminaDuplicados ( generaTuplas n m)))) ((power 10 9)+ 7))
 
+{-
+Funcion empleada para que devuelva la primer letra de una 
+palabra, dada una cadena, donde nuestro primer argumento 
+es un entero el cual nos servira para poder "iterar" la 
+cadena se inicializa desde 0 cuando se emplea debido que 
+si no es asi omitara la primer palabra
+-}
 aux1::Int -> String ->String
 aux1 _ " " = ""
 aux1 n str 
